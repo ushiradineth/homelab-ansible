@@ -1,5 +1,6 @@
 ---
 - name: Create NixOS configuration file
+  become: true
   template:
     src: "configuration.nix.j2"
     dest: "/etc/nixos/configuration.nix"
@@ -7,6 +8,7 @@
   register: config
 
 - name: Rebuild NixOS
+  become: true
   command: "nixos-rebuild switch"
   when: config is changed
 
