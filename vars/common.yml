@@ -1,0 +1,24 @@
+DEFAULT_USER: shu
+HOST_NAME: shulab
+SSH_PORT: 2233
+TIMEZONE: Asia/Dubai
+
+NIX_PACKAGES:
+  - neovim
+  - htop
+  - git
+  - lazygit
+  - stow
+  - zoxide
+  - eza
+  - bat
+  - fzf
+  - fd
+  - kubectl
+  - kubectx
+  - k9s
+  - libgcc
+  - libgccjit
+  - sqlite
+  - gh
+  - python3

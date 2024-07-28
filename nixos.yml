@@ -1,0 +1,15 @@
+---
+- name: nixos
+  hosts: all # Host is defined on the run command
+  gather_facts: false # This playbook does not initially connect to remote
+  vars_files:
+    - vars/common.yml
+
+  tasks:
+    - name: Set SSH Port
+      include_role:
+        name: ssh_port
+
+    - name: Setup NixOS
+      include_role:
+        name: nixos

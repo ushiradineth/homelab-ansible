@@ -1,0 +1,34 @@
+---
+- set_fact:
+    host_ip: "{{ inventory_hostname | regex_replace('^[^@]+@', '') }}"
+    default_port: "22"
+
+- name: "Check port {{ SSH_PORT }}"
+  command: "nc -zv {{ host_ip }} {{ SSH_PORT }}"
+  register: is_custom
+  changed_when: is_custom.stderr.find('open') == -1
+  ignore_errors: true
+  delegate_to: "localhost"
+
+- name: "Set ansible_port to {{ SSH_PORT }}"
+  set_fact:
+    ansible_port: "{{ SSH_PORT }}"
+  when: is_custom is succeeded
+
+- name: "Check port {{ default_port }}"
+  command: "nc -zv {{ host_ip }} {{ default_port }}"
+  register: is_default
+  changed_when: is_default.stderr.find('open') == -1
+  ignore_errors: true
+  delegate_to: "localhost"
+  when: is_custom is changed
+
+- name: "Set ansible_port to {{ default_port }}"
+  set_fact:
+    ansible_port: "{{ default_port}}"
+  when: is_default is succeeded and is_default is not skipped and is_default is not changed
+
+- name: Failed to establish SSH Connection
+  fail:
+    msg: "Cannot establish SSH connection with Host through port {{ default_port }} or {{ SSH_PORT }}"
+  when: is_default is changed and is_custom is changed

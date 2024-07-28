@@ -1,0 +1,72 @@
+{ config, lib, pkgs, ... }:
+
+{
+  imports = [ ./hardware-configuration.nix ];
+
+  # Boot
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+
+  # Networking
+  networking.hostName = "{{ HOST_NAME }}";
+  networking.networkmanager.enable = true;
+  networking.firewall.allowPing = false;
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [
+    {{ SSH_PORT }} # ssh
+  ];
+
+  # SSH
+  services.openssh.enable = true;
+  services.openssh.settings.PermitRootLogin = "yes";
+  services.openssh.ports = [ {{ SSH_PORT }} ];
+
+  # User
+  users = {
+    defaultUserShell = pkgs.zsh;
+    users.{{ DEFAULT_USER }} = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "users"
+        "docker"
+      ];
+      createHome = true;
+      useDefaultShell = true;
+    };
+  };
+
+  # Packages and Programs
+  environment.systemPackages = with pkgs; [
+{% for pkg in NIX_PACKAGES %}
+    {{ pkg }}
+{% endfor %}
+  ];
+
+  # Misc Services
+  programs.zsh.enable = true;
+  virtualisation.docker.enable = true;
+
+  # Kubernetes
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+
+  # Localization
+  time.timeZone = "{{ TIMEZONE }}";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Misc
+  ## Keep system up when lid is closed
+  services.logind.lidSwitch = "ignore";
+  services.logind.lidSwitchExternalPower = "ignore";
+  services.logind.lidSwitchDocked = "ignore";
+
+  ## Required for downloading drivers
+  nixpkgs.config.allowUnfree = true;
+
+  ## Copy the NixOS configuration file and link it from the resulting system
+  system.copySystemConfiguration = true;
+
+  ## Initial NixOS version. Do not change.
+  system.stateVersion = "24.05";
+}
