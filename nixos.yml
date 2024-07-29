@@ -1,7 +1,7 @@
 ---
 - name: nixos
   hosts: all # Host is defined on the run command
-  gather_facts: false # This playbook does not initially connect to remote
+  gather_facts: false
   vars_files:
     - vars/common.yml
 
