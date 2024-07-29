@@ -6,10 +6,11 @@
   git:
     repo: "{{ DOTFILES_REPO }}"
     dest: "{{ DOTFILES_PATH }}"
-    single_branch: yes
+    single_branch: true
     version: "{{ DOTFILES_BRANCH }}"
-    clone: yes
-    update: yes
+    clone: true
+    update: true
+    force: true
   register: clone
 
 - name: Create .config directory in user directory
