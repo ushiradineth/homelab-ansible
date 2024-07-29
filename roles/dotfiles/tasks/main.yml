@@ -1,11 +1,11 @@
 ---
 - set_fact:
-    dotfiles_path: "{{ HOME_DIR }}/dotfiles"
+    DOTFILES_PATH: "{{ HOME_DIR }}/dotfiles"
 
 - name: Clone dotfiles repo
   git:
     repo: "{{ DOTFILES_REPO }}"
-    dest: "{{ dotfiles_path }}"
+    dest: "{{ DOTFILES_PATH }}"
     single_branch: yes
     version: "{{ DOTFILES_BRANCH }}"
     clone: yes
@@ -19,5 +19,5 @@
     mode: '0755'
 
 - name: Stow the dotfiles
-  command: "stow --dir={{ dotfiles_path }} --target={{ HOME_DIR }}/ ."
+  command: "stow --dir={{ DOTFILES_PATH }} --target={{ HOME_DIR }}/ ."
   when: clone is changed
