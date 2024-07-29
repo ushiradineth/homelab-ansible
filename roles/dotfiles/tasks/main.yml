@@ -1,0 +1,23 @@
+---
+- set_fact:
+    dotfiles_path: "{{ HOME_DIR }}/dotfiles"
+
+- name: Clone dotfiles repo
+  git:
+    repo: "{{ DOTFILES_REPO }}"
+    dest: "{{ dotfiles_path }}"
+    single_branch: yes
+    version: "{{ DOTFILES_BRANCH }}"
+    clone: yes
+    update: yes
+  register: clone
+
+- name: Create .config directory in user directory
+  file:
+    path: "{{ HOME_DIR }}/.config"
+    state: directory
+    mode: '0755'
+
+- name: Stow the dotfiles
+  command: "stow --dir={{ dotfiles_path }} --target={{ HOME_DIR }}/ ."
+  when: clone is changed

@@ -1,0 +1,18 @@
+---
+- name: dotfiles
+  hosts: all # Host is defined on the run command
+  gather_facts: true
+  vars_files:
+    - vars/common.yml
+
+  roles:
+    - ssh_port
+
+    - role: dotfiles
+      vars:
+        HOME_DIR: "/home/{{ DEFAULT_USER }}"
+
+    - role: dotfiles
+      become: true
+      vars:
+        HOME_DIR: "/root"
