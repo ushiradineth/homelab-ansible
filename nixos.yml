@@ -5,11 +5,6 @@
   vars_files:
     - vars/common.yml
 
-  tasks:
-    - name: Set SSH Port
-      include_role:
-        name: ssh_port
-
-    - name: Setup NixOS
-      include_role:
-        name: nixos
+  roles:
+    - ssh_port
+    - nixos
