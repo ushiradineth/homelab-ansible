@@ -1,0 +1,60 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.53.1
+    restart: unless-stopped
+    expose:
+      - 9090
+    networks:
+      - observability
+    volumes:
+      - prometheus:/prometheus
+      - ~/docker/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+    - "--config.file=/etc/prometheus/prometheus.yml"
+    - "--storage.tsdb.path=/prometheus"
+    - "--web.console.libraries=/etc/prometheus/console_libraries"
+    - "--web.console.templates=/etc/prometheus/consoles"
+    - "--web.enable-lifecycle"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.1.1
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    expose:
+      - 3000
+    networks:
+      - observability
+    volumes:
+      - grafana:/var/lib/grafana
+      - ~/docker/config/grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/default.yml
+      - ~/docker/config/grafana/provisioning/datasources.yml:/etc/grafana/provisioning/datasources/default.yml
+      - ~/docker/config/grafana/dashboards:/var/lib/grafana/dashboards
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:v1.8.2
+    restart: unless-stopped
+    expose:
+      - 9100
+    networks:
+      - observability
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=-^/(sys|proc|dev|host|etc)($$|/)"
+
+volumes:
+  grafana: {}
+  prometheus: {}
+
+networks:
+  observability:
+    driver: bridge

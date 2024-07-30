@@ -1,0 +1,10 @@
+---
+- name: "Copy {{ FILE_NAME }} to remote"
+  copy:
+    src: "{{ LOCAL_DIR }}/{{ FILE_NAME }}"
+    dest: "{{ REMOTE_DIR }}/{{ FILE_NAME }}"
+  register: file
+
+- name: Deploy service(s)
+  command: "docker compose -f {{ REMOTE_DIR }}/{{ FILE_NAME }} up -d"
+  when: file is changed

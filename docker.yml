@@ -1,0 +1,68 @@
+---
+- name: docker
+  hosts: all # Host is defined on the run command
+  gather_facts: false
+  vars_files:
+    - vars/common.yml
+  vars:
+    REMOTE_DIR: "/home/{{ DEFAULT_USER }}/docker"
+    LOCAL_DIR: "docker"
+
+  tasks:
+    - name: Set SSH Port
+      include_role:
+        name: ssh_port
+
+    - name: Create docker directory
+      file:
+        path: "{{ REMOTE_DIR }}"
+        state: directory
+        mode: 0755
+
+    - name: Create config directory
+      file:
+        path: "{{ REMOTE_DIR }}/config"
+        state: directory
+        mode: 0755
+
+    - name: Copy configuration
+      copy:
+        src: "{{ LOCAL_DIR }}/config/"
+        dest: "{{ REMOTE_DIR }}/config/"
+        mode: 0755
+      register: configuration
+
+    - name: Create data directory
+      file:
+        path: "{{ REMOTE_DIR }}/data"
+        state: directory
+        mode: 0755
+
+    - name: Stat check .env
+      stat:
+        path: "{{ REMOTE_DIR }}/.env"
+      register: dotenv
+
+    - block:
+      - name: Create .env file
+        template:
+          src: "{{ LOCAL_DIR }}/.env.example"
+          dest: "{{ REMOTE_DIR }}/.env"
+          mode: 0755
+      - name: End play
+        debug:
+          msg: Fill the .env file and run again
+      - meta: end_play
+      when: not dotenv.stat.exists
+
+    - name: Docker Containers
+      include_role:
+        name: docker
+      vars:
+        FILE_NAME: "{{ item }}"
+      loop: "{{ DOCKER_COMPOSE_FILES }}"
+
+    - name: Restart affected applications
+      command: "docker compose -f {{ item }} restart"
+      when: configuration is changed
+      loop: "{{ CONFIG_AFFECTED_COMPOSE_FILES }}"
