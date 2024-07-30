@@ -14,6 +14,10 @@
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
     {{ SSH_PORT }} # ssh
+    7844 # cloudflared
+  ];
+  networking.firewall.allowedUDPPorts = [ 
+    7844 # cloudflared
   ];
 
   # SSH
