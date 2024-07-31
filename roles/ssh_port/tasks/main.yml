@@ -26,9 +26,14 @@
 - name: "Set ansible_port to {{ default_port }}"
   set_fact:
     ansible_port: "{{ default_port}}"
-  when: is_default is succeeded and is_default is not skipped and is_default is not changed
+  when:
+    - is_default is succeeded
+    - is_default is not skipped
+    - is_default is not changed
 
 - name: Failed to establish SSH Connection
   fail:
     msg: "Cannot establish SSH connection with Host through port {{ default_port }} or {{ SSH_PORT }}"
-  when: is_default is changed and is_custom is changed
+  when:
+    - is_default is changed
+    - is_custom is changed
