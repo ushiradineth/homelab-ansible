@@ -26,11 +26,5 @@ NIX_PACKAGES:
 DOTFILES_REPO: https://github.com/ushiradineth/dotfiles.git
 DOTFILES_BRANCH: homelab
 
-DOCKER_COMPOSE_FILES:
-  - observability.yml
-  - uptime-kuma.yml
-  - portainer.yml
-  - crafty.yml
-
 CONFIG_AFFECTED_COMPOSE_FILES:
   - observability.yml

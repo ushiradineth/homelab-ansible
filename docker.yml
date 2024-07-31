@@ -59,8 +59,9 @@
       include_role:
         name: docker
       vars:
-        FILE_NAME: "{{ item }}"
-      loop: "{{ DOCKER_COMPOSE_FILES }}"
+        FILE_NAME: "{{ item | basename }}"
+        FILE_PATH: "{{ item }}"
+      with_fileglob: "{{ LOCAL_DIR }}/*.yml"
 
     - name: Restart affected applications
       command: "docker compose -f {{ item }} restart"

@@ -1,7 +1,7 @@
 ---
 - name: "Copy {{ FILE_NAME }} to remote"
   copy:
-    src: "{{ LOCAL_DIR }}/{{ FILE_NAME }}"
+    src: "{{ FILE_PATH }}"
     dest: "{{ REMOTE_DIR }}/{{ FILE_NAME }}"
   register: file
 
