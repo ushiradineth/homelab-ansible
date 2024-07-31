@@ -1,0 +1,25 @@
+services:
+  crafty:
+    container_name: crafty
+    image: arcadiatechnology/crafty-4:4.4.0
+    restart: unless-stopped
+    ports:
+      - "8443:8443" # Dashboard
+      - "8123:8123" # Dynmap
+      - "25565:25565" # MC Server
+    volumes:
+      - ~/docker/data/crafty/backups:/crafty/backups
+      - ~/docker/data/crafty/logs:/crafty/logs
+      - ~/docker/data/crafty/servers:/crafty/servers
+      - ~/docker/data/crafty/config:/crafty/app/config
+      - ~/docker/data/crafty/import:/crafty/import
+
+  crafty_tunnel:
+    container_name: crafty_tunnel
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    environment:
+      - NGROK_AUTHTOKEN
+    ports:
+      - "4040:4040" # Dashboard
+    command: "tcp crafty:25565"

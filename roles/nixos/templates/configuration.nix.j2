@@ -15,6 +15,9 @@
   networking.firewall.allowedTCPPorts = [
     {{ SSH_PORT }} # ssh
     7844 # cloudflared
+    8433 # Crafty Dashboard
+    25565 # MC Server
+    4040 # ngrok Dashboard
   ];
   networking.firewall.allowedUDPPorts = [ 
     7844 # cloudflared
