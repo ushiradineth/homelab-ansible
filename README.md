@@ -15,12 +15,13 @@
 - [x] Portainer (Docker UI)
 - [x] Uptime Kuma
 - [x] Observability for system and network. (Prometheus, Grafana, Node Exporter)
-- [ ] Crafty (Minecraft Server)
+- [x] Crafty (Minecraft Server)
+- [x] Ngrok (TCP Tunnels)
 - [ ] Homer (Dashboard)
 - [ ] Network Drive with Google Drive like UI (Samba + NextCloud or PhotoPrism)
 - [ ] Pihole or Adguard (Adblocker and DNS)
 - [ ] PFSense or OpenSense (Firewall)
-- [ ] VPN (Tailscale or Wireguard)
+- [ ] Tailscale or Wireguard (VPN)
 - [ ] KASM (?)
 - [ ] CasaOS (?)
 
