@@ -3,12 +3,12 @@ services:
     container_name: uptime-kuma
     image: louislam/uptime-kuma:1
     restart: unless-stopped
+    environment:
+      - UPTIME_KUMA_CLOUDFLARED_TOKEN
     ports:
       - "7844:7844"
     volumes:
       - uptime-kuma:/app/data
-    environment:
-      - UPTIME_KUMA_CLOUDFLARED_TOKEN
 
 volumes:
   uptime-kuma: {}
