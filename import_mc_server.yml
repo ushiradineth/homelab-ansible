@@ -1,0 +1,35 @@
+---
+- name: import_mc_server
+  hosts: all # Host is defined on the run command
+  gather_facts: false
+  vars_files:
+    - vars/common.yml
+
+  tasks:
+    - name: Set SSH Port
+      include_role:
+        name: ssh_port
+
+    - name: Delete existing files
+      file:
+        state: absent
+        path: "{{ REMOTE_DIR }}/{{ item }}"
+      loop: "{{ FILES }}"
+
+    - name: Delete existing folders
+      file:
+        state: absent
+        path: "{{ REMOTE_DIR }}/{{ item }}"
+      loop: "{{ FOLDERS }}"
+
+    - name: "Copy file {{ item }} to remote"
+      copy:
+        src: "{{ LOCAL_DIR }}/{{ item }}"
+        dest: "{{ REMOTE_DIR }}/{{ item }}"
+      loop: "{{ FILES }}"
+
+    - name: "Copy folder {{ item }}/ content to remote"
+      copy:
+        src: "{{ LOCAL_DIR }}/{{ item }}/"
+        dest: "{{ REMOTE_DIR }}/{{ item }}/"
+      loop: "{{ FOLDERS }}"

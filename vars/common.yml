@@ -29,3 +29,18 @@ DOTFILES_BRANCH: homelab
 
 CONFIG_AFFECTED_COMPOSE_FILES:
   - observability.yml
+
+MC_FILES:
+  - level.dat
+  - level.dat_old
+  - session.lock
+
+MC_FOLDERS:
+  - advancements
+  - data
+  - datapacks
+  - entities
+  - playerdata
+  - poi
+  - region
+  - stats
