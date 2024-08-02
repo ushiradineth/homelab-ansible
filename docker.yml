@@ -64,6 +64,6 @@
       with_fileglob: "{{ LOCAL_DIR }}/*.yml"
 
     - name: Restart affected applications
-      command: "docker compose -f {{ item }} restart"
+      command: "docker compose -f {{ REMOTE_DIR }}/{{ item }} restart"
       when: configuration is changed
       loop: "{{ CONFIG_AFFECTED_COMPOSE_FILES }}"
