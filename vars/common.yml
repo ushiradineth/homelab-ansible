@@ -22,6 +22,7 @@ NIX_PACKAGES:
   - sqlite
   - gh
   - python3
+  - speedtest-cli
 
 DOTFILES_REPO: https://github.com/ushiradineth/dotfiles.git
 DOTFILES_BRANCH: homelab
