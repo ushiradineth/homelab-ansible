@@ -18,11 +18,10 @@
 - [x] Crafty (Minecraft Server)
 - [x] Ngrok (TCP Tunnels)
 - [ ] Tailscale or Wireguard (VPN)
-- [ ] NextCloud (Network Drive with Google Drive like UI)
+- [x] NextCloud (Network Drive with Google Drive like UI)
 - [ ] Adguard (Local DNS + DHCP Server)
 - [ ] Homer (Dashboard)
 - [x] KASM (Desktop as a Service)
-- [ ] CasaOS (?)
 
 ## 🏗️ Kubernetes Services
 
