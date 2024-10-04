@@ -14,22 +14,22 @@
       file:
         state: absent
         path: "{{ LOCAL_DIR }}/{{ item }}"
-      loop: "{{ FILES }}"
+      loop: "{{ MC_FILES }}"
 
     - name: Delete existing folders
       file:
         state: absent
         path: "{{ LOCAL_DIR }}/{{ item }}"
-      loop: "{{ FOLDERS }}"
+      loop: "{{ MC_FOLDERS }}"
 
-    - name: "Copy file {{ item }} from remote"
+    - name: "Fetch file {{ item }} from remote"
       fetch:
         src: "{{ REMOTE_DIR }}/{{ item }}"
         dest: "{{ LOCAL_DIR }}/{{ item }}"
-      loop: "{{ FILES }}"
+      loop: "{{ MC_FILES }}"
 
-    - name: "Copy folder {{ item }}/ content from remote"
+    - name: "Fetch folder {{ item }}/ content from remote"
       fetch:
         src: "{{ REMOTE_DIR }}/{{ item }}/"
         dest: "{{ LOCAL_DIR }}/{{ item }}/"
-      loop: "{{ FOLDERS }}"
+      loop: "{{ MC_FOLDERS }}"
