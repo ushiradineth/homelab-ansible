@@ -97,7 +97,10 @@
 
   # Misc Services
   programs.zsh.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+  };
 
   # Kubernetes
   services.k3s.enable = true;

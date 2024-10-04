@@ -17,12 +17,11 @@
 - [x] Observability for system and network. (Prometheus, Grafana, Node Exporter)
 - [x] Crafty (Minecraft Server)
 - [x] Ngrok (TCP Tunnels)
-- [ ] Homer (Dashboard)
-- [ ] Network Drive with Google Drive like UI (Samba + NextCloud or PhotoPrism)
-- [ ] Pihole or Adguard (Adblocker and DNS)
-- [ ] PFSense or OpenSense (Firewall)
 - [ ] Tailscale or Wireguard (VPN)
-- [ ] KASM (?)
+- [ ] NextCloud (Network Drive with Google Drive like UI)
+- [ ] Adguard (Local DNS + DHCP Server)
+- [ ] Homer (Dashboard)
+- [x] KASM (Desktop as a Service)
 - [ ] CasaOS (?)
 
 ## 🏗️ Kubernetes Services

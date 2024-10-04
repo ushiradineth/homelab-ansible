@@ -1,0 +1,15 @@
+services:
+  kasm:
+    container_name: kasm
+    image: lscr.io/linuxserver/kasm:1.15.0
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - KASM_PORT=5050
+    ports:
+      - '5050:5050'
+      - '5051:3000'
+    volumes:
+      - ~/docker/data/kasm:/opt
+      - /dev/input:/dev/input
+      - /run/udev/data:/run/udev/data
