@@ -31,10 +31,12 @@
   # User
   users = {
     defaultUserShell = pkgs.zsh;
-    users.{{ DEFAULT_USER }} = {
+    users.{{ DEFAULT_USER | lower }} = {
       isNormalUser = true;
       extraGroups = [
         "wheel"
+        "input"
+        "video"
         "users"
         "docker"
       ];
@@ -42,6 +44,49 @@
       useDefaultShell = true;
     };
   };
+
+  # UI
+  services.xserver = {
+    enable = {{ ENABLE_UI | lower }};
+    videoDrivers = [ "nvidia" ];
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = false;
+    libinput.enable = true;
+  };
+
+  # Drivers
+   hardware.opengl = {
+    enable = {{ ENABLE_UI | lower }};
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+
+    # Use Open Source drivers (not supported by 820M)
+    open = false;
+    
+    # Enable the Nvidia settings menu.
+    nvidiaSettings = false;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+
+    prime = {
+      sync.enable = true;
+      nvidiaBusId = "PCI:3:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+  };
+
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
 
   # Packages and Programs
   environment.systemPackages = with pkgs; [
@@ -102,8 +147,12 @@
   services.logind.lidSwitchExternalPower = "ignore";
   services.logind.lidSwitchDocked = "ignore";
 
-  ## Required for downloading drivers
-  nixpkgs.config.allowUnfree = true;
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
 
   ## Copy the NixOS configuration file and link it from the resulting system
   system.copySystemConfiguration = true;

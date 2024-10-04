@@ -3,7 +3,7 @@
   become: true
   template:
     src: "configuration.nix.j2"
-    dest: "/etc/nixos/configuration.nix"
+    dest: "{{ (ROOT | default('')) + '/etc/nixos/configuration.nix' }}"
     mode: 0744
   register: config
 

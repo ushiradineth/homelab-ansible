@@ -79,3 +79,15 @@
 
   - Copy the compose file from the local directory to the remote directory.
   - Deploy the service(s) defined in the compose file.
+
+## NixOS Installation Flow
+
+- Download the latest NixOS Minimal ISO from the [NixOS website](https://nixos.org/download/).
+- Create a bootable USB drive with the ISO file using a tool like [Balena Etcher](https://etcher.balena.io/).
+- Follow the instructions on the [NixOS website](https://nixos.org/manual/nixos/stable/#sec-installation).
+- Edit the configuration.nix file to have the following changes:
+    - `services.openssh.settings.PermitRootLogin = "yes"`
+    - Add `python3` to the `environment.systemPackages` list.
+- Run `nixos-rebuild switch` to update the configuration.
+- Run `ansible-playbook -i root@ip, nixos.yml --ask-pass --ask-become-pass`
+- Reboot the system.

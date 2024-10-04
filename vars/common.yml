@@ -21,8 +21,11 @@ NIX_PACKAGES:
   - libgccjit
   - sqlite
   - gh
-  - python3
   - speedtest-cli
+  - python3
+  - jdk17
+  - lshw
+  - pciutils
 
 DOTFILES_REPO: https://github.com/ushiradineth/dotfiles.git
 DOTFILES_BRANCH: homelab
@@ -44,3 +47,5 @@ MC_FOLDERS:
   - poi
   - region
   - stats
+
+ENABLE_UI: false
