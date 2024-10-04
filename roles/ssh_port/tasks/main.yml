@@ -24,16 +24,19 @@
   timeout: 5
   delegate_to: "localhost"
   when:
-    - is_custom is changed or is_custom is failed or is_custom is not succeeded
+    - is_custom is changed or is_custom is not succeeded
 
 - name: "Set ansible_port to {{ default_port }}"
   set_fact:
     ansible_port: "{{ default_port}}"
   when:
-    - is_default is succeeded or is_default is not skipped or is_default is not changed
+    - is_default is succeeded
+    - is_default is not skipped
+    - is_default is not changed
 
 - name: Failed to establish SSH Connection
   fail:
     msg: "Cannot establish SSH connection with Host through port {{ default_port }} or {{ SSH_PORT }}"
   when:
-    - is_default is changed or is_custom is changed
+    - is_default is changed
+    - is_custom is changed
