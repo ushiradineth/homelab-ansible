@@ -1,4 +1,8 @@
-# 🧪 Homelab Configuration
+# 🧪 Homelab Configuration 
+
+## **This repo has been replaced by [Homelab](https://github.com/ushiradineth/homelab)**
+
+## About
 
 - This repository consists of code that helps me boot up my 'home server' from scratch with a few simple commands.
 - My motivation for this is due to my old laptop failing beyond repair at times which requires me to restart configuration from the beginning.
@@ -17,19 +21,8 @@
 - [x] Observability for system and network. (Prometheus, Grafana, Node Exporter)
 - [x] Crafty (Minecraft Server)
 - [x] Ngrok (TCP Tunnels)
-- [ ] Tailscale or Wireguard (VPN)
 - [x] NextCloud (Network Drive with Google Drive like UI)
-- [ ] Adguard (Local DNS + DHCP Server)
-- [ ] Homer (Dashboard)
 - [x] KASM (Desktop as a Service)
-
-## 🏗️ Kubernetes Services
-
-- [ ] CertManager
-- [ ] Traefik
-- [ ] Zalando (PostgreSQL Cluster)
-- [ ] Knative
-- [ ] Observability Stack
 
 ## 📂 Ansible Documentation
 
